@@ -10,22 +10,13 @@
     return !!db
   }
   
-  /**
-   * getDB - Get an object representing the DB file.
-   * @param task - The task to read from.
-   * @returns Promise
-   */
   libTaskDB.getDB = function(task){
     if (!libTaskDB.taskHasDB(task)) {
       const wrapper = FileWrapper.withContents(DB_NAME, Data.fromString('{}'))
       task.addAttachment(wrapper)
     }
-    return new Promise(res => {
-      Timer.once(0, () => {
-        const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
-        res(JSON.parse(db.contents.toString()));
-      })
-    })
+    const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
+    return JSON.parse(db ? db.contents.toString() : '{}');
   }
   
   libTaskDB.writeDB = function(task, newDB){
@@ -36,14 +27,20 @@
     task.addAttachment(wrapper)
   }
 
-  libTaskDB.storeToTask = async function(task, key, value){
-    const db = await libTaskDB.getDB(task)
+  libTaskDB.storeToTask = function(task, key, value){
+    const db = libTaskDB.getDB(task)
     db[key] = value
-    libTaskDB.writeDB(task, db)
+    Timer.once(0, () => { libTaskDB.writeDB(task, db) });
+  }
+  
+  libTaskDB.removeFromTask = function(task, key){
+    const db = libTaskDB.getDB(task)
+    delete db[key]
+    Timer.once(0, () => { libTaskDB.writeDB(task, db) });
   }
 
-  libTaskDB.getFromTask = async function(task, key){
-    const db = await libTaskDB.getDB(task)
+  libTaskDB.getFromTask = function(task, key){
+    const db = libTaskDB.getDB(task)
     return db[key]
   }
   

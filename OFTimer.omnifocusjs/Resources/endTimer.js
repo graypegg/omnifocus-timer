@@ -3,6 +3,7 @@
 		const alert = new Alert('Time already logged.', 'There\'s already time logged for this task. Would you like to add to this value, or replace it?')
 		alert.addOption('Add')
 		alert.addOption('Replace')
+		alert.addOption('Cancel')
 		const alertPromise = alert.show()
 
 		alertPromise.then(buttonIndex => {
@@ -32,12 +33,19 @@
 		const startDate = new Date(await this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')))
 		const timeSpent = dateToMinutes(new Date()) - dateToMinutes(startDate)
 
+		this.libTaskDB.removeFromTask(task, this.libTaskDB.key('start'))
+
 		if (task.estimatedMinutes !== null) askShouldAddTime(task, timeSpent)
 		else task.estimatedMinutes = timeSpent
 	});
 
 	action.validate = function(selection, sender){
-		return selection.tasks && selection.tasks.length > 0;
+		return (
+			selection.tasks &&
+			selection.tasks.length > 0 &&
+			selection.tasks.every((task) => !!this.libTaskDB.taskHasDB(task)) &&
+			selection.tasks.every((task) => !!this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')))
+		);
 	};
 
 	return action;
