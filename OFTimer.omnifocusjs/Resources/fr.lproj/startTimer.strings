@@ -1,4 +1,8 @@
 "label" = "Démarrer le chronomètre";
 "shortLabel" = "Démarrer";
 "mediumLabel" = "Démarrer le chrono";
-"longLabel" = "Démarrer à chronomètrer le tâche choisi.";
+"longLabel" = "Démarrer à chronomètrer la tâche choisi.";
+"Timer already running." = "Le chronomètre marche encore.";
+"There's already a timer running for this task. Would you like to restart it?" = "Il y a un chronomètre qui marche pour cette tâche. Voudriez-vous à redémarrer ce chronomètre?";
+"Restart" = "Redémarrer";
+"Cancel" = "Annuler";

@@ -1,0 +1,9 @@
+"label" = "Arrêter le chronomètre";
+"shortLabel" = "Arrêter";
+"mediumLabel" = "Arrêter le chrono";
+"longLabel" = "Arrêter de chronomètrer le tâche choisi.";
+"Time already logged." = "Quelque heures sont enregistrés.";
+"There's already time logged for this task. Would you like to add to this value, or replace it?" = "Il y a quelque heures qui sont enregistrés pour cette tâche. Voudriez-vous à ajouter les nouvelles heures, ou en remplacer?";
+"Add" = "Ajouter";
+"Replace" = "Remplacer";
+"Leave as-is" = "Ne pas changer";

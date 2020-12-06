@@ -5,11 +5,11 @@
     "description": "Time-tracking tools built for OmniFocus.",
     "actions": [
         {
-            "image": "icon.png",
+            "image": "start.png",
             "identifier": "startTimer"
         },
         {
-            "image": "icon.png",
+            "image": "stop.png",
             "identifier": "endTimer"
         }
     ],

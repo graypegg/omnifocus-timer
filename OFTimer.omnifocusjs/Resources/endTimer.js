@@ -3,7 +3,7 @@
 		const alert = new Alert('Time already logged.', 'There\'s already time logged for this task. Would you like to add to this value, or replace it?')
 		alert.addOption('Add')
 		alert.addOption('Replace')
-		alert.addOption('Cancel')
+		alert.addOption('Leave as-is')
 		const alertPromise = alert.show()
 
 		alertPromise.then(buttonIndex => {

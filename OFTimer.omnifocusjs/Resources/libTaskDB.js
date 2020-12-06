@@ -45,6 +45,7 @@
   }
   
   libTaskDB.key = function(name){
+    // @TODO: Replace with indentifier from parent plugin.
     return 'oftimer' + '-' + name
   }
 
