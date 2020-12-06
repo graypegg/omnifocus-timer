@@ -1,0 +1,18 @@
+{
+    "author": "@graypegg",
+    "identifier": "com.graypegg.of-timer",
+    "version": "1.0",
+    "description": "Time-tracking tools built for OmniFocus.",
+    "actions": [
+        {
+            "image": "icon.png",
+            "identifier": "startTimer"
+        }
+    ],
+    "libraries": [
+        {
+            "identifier": "libTaskDB"
+        }
+    ],
+    "defaultLocale": "en"
+}
