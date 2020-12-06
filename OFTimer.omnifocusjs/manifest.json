@@ -7,6 +7,10 @@
         {
             "image": "icon.png",
             "identifier": "startTimer"
+        },
+        {
+            "image": "icon.png",
+            "identifier": "endTimer"
         }
     ],
     "libraries": [
