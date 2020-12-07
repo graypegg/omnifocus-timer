@@ -11,6 +11,9 @@
         {
             "image": "stop.png",
             "identifier": "endTimer"
+        },
+        {
+            "identifier": "sumProjectDuration"
         }
     ],
     "libraries": [

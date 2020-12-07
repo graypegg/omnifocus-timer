@@ -1,0 +1,4 @@
+"label" = "Update this project's duration";
+"shortLabel" = "Project Update";
+"mediumLabel" = "Update Project's Duration";
+"longLabel" = "Update this project's duration by recursivly summing all child task's estimated duration together.";
