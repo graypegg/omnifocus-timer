@@ -30,10 +30,8 @@
 
 	let action = new PlugIn.Action(async function(selection, sender){
 		const task = selection.tasks[0]
-		console.log('first')
 		const startDate = new Date(await this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')))
 		const timeSpent = dateToMinutes(new Date()) - dateToMinutes(startDate)
-		console.log(startDate, 'asd')
 
 		await this.libTaskDB.removeFromTask(task, this.libTaskDB.key('start'))
 
