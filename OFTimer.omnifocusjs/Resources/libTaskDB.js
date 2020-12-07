@@ -10,13 +10,17 @@
     return !!db
   }
   
-  libTaskDB.getDB = function(task){
+  libTaskDB.getDB = async function(task){
     if (!libTaskDB.taskHasDB(task)) {
       const wrapper = FileWrapper.withContents(DB_NAME, Data.fromString('{}'))
       task.addAttachment(wrapper)
     }
-    const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
-    return JSON.parse(db ? db.contents.toString() : '{}');
+    return new Promise(res => {
+      Timer.once(0, () => {
+        const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
+        res(JSON.parse(db ? db.contents.toString() : '{}'))
+      })
+    })
   }
   
   libTaskDB.writeDB = function(task, newDB){
@@ -27,21 +31,29 @@
     task.addAttachment(wrapper)
   }
 
-  libTaskDB.storeToTask = function(task, key, value){
-    const db = libTaskDB.getDB(task)
+  libTaskDB.storeToTask = async function(task, key, value){
+    const db = await libTaskDB.getDB(task)
     db[key] = value
     Timer.once(0, () => { libTaskDB.writeDB(task, db) });
   }
   
-  libTaskDB.removeFromTask = function(task, key){
-    const db = libTaskDB.getDB(task)
+  libTaskDB.removeFromTask = async function(task, key){
+    const db = await libTaskDB.getDB(task)
     delete db[key]
     Timer.once(0, () => { libTaskDB.writeDB(task, db) });
   }
 
-  libTaskDB.getFromTask = function(task, key){
-    const db = libTaskDB.getDB(task)
+  libTaskDB.getFromTask = async function(task, key){
+    const db = await libTaskDB.getDB(task)
     return db[key]
+  }
+
+  libTaskDB.checkHasTaskKey = function(task, key){
+    const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
+    if (db) {
+      return JSON.parse(db.contents.toString())[key] !== undefined
+    }
+    return false
   }
   
   libTaskDB.key = function(name){

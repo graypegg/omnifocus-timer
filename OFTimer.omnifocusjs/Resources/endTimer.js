@@ -30,21 +30,24 @@
 
 	let action = new PlugIn.Action(async function(selection, sender){
 		const task = selection.tasks[0]
+		console.log('first')
 		const startDate = new Date(await this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')))
 		const timeSpent = dateToMinutes(new Date()) - dateToMinutes(startDate)
+		console.log(startDate, 'asd')
 
-		this.libTaskDB.removeFromTask(task, this.libTaskDB.key('start'))
+		await this.libTaskDB.removeFromTask(task, this.libTaskDB.key('start'))
 
 		if (task.estimatedMinutes !== null) askShouldAddTime(task, timeSpent)
 		else task.estimatedMinutes = timeSpent
 	});
 
 	action.validate = function(selection, sender){
+		const startValue = this.libTaskDB.checkHasTaskKey(selection.tasks[0], this.libTaskDB.key('start'))
 		return (
 			selection.tasks &&
 			selection.tasks.length > 0 &&
 			selection.tasks.every((task) => !!this.libTaskDB.taskHasDB(task)) &&
-			selection.tasks.every((task) => !!this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')))
+			!!startValue
 		);
 	};
 

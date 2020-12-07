@@ -14,12 +14,14 @@
 		})
 	}
 
-	let action = new PlugIn.Action(function(selection, sender){
+	let action = new PlugIn.Action(async function(selection, sender){
 		const task = selection.tasks[0]
 
 		const startTimer = (() => this.libTaskDB.storeToTask(task, this.libTaskDB.key('start'), new Date()))
 
-		if (!!this.libTaskDB.getFromTask(task, this.libTaskDB.key('start'))) {
+		const startValue = await this.libTaskDB.getFromTask(task, this.libTaskDB.key('start')); 
+
+		if (!!startValue) {
 			askShouldRestartTimer(task, startTimer)
 		} else { startTimer() }
 	});
