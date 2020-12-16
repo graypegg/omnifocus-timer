@@ -49,9 +49,11 @@
   }
 
   libTaskDB.checkHasTaskKey = function(task, key){
-    const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
-    if (db) {
-      return JSON.parse(db.contents.toString())[key] !== undefined
+    if (task && task.attachments !== undefined) {
+      const db = task.attachments.find(wrapper => wrapper.filename === DB_NAME)
+      if (db) {
+        return JSON.parse(db.contents.toString())[key] !== undefined
+      }
     }
     return false
   }
