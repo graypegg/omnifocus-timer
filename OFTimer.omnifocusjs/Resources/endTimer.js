@@ -40,13 +40,17 @@
 	});
 
 	action.validate = function(selection, sender){
-		const startValue = this.libTaskDB.checkHasTaskKey(selection.tasks[0], this.libTaskDB.key('start'))
-		return (
-			selection.tasks &&
-			selection.tasks.length > 0 &&
-			selection.tasks.every((task) => !!this.libTaskDB.taskHasDB(task)) &&
-			!!startValue
-		);
+		if (selection.tasks[0]) {
+			const startValue = this.libTaskDB.checkHasTaskKey(selection.tasks[0], this.libTaskDB.key('start'))
+			return (
+				selection.tasks &&
+				selection.tasks.length > 0 &&
+				selection.tasks.every((task) => !!this.libTaskDB.taskHasDB(task)) &&
+				!!startValue
+			);
+		} else {
+			return false;
+		}
 	};
 
 	return action;
